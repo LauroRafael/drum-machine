@@ -1,4 +1,4 @@
-<![CDATA[<div align="center">
+<div align="center">
 
 # 🥁 Drum Machine
 
@@ -186,4 +186,3 @@ Made with ❤️ by [Lauro Rafael](https://lartecnologia.com.br) — **LAR Tecno
 [![GitHub](https://img.shields.io/badge/GitHub-LauroRafael-181717?logo=github&logoColor=white)](https://github.com/LauroRafael)
 
 </div>
-]]>
