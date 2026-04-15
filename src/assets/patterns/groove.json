@@ -1,0 +1,17 @@
+{
+  "name": "Groove",
+  "bpm": 100,
+  "swing": 30,
+  "timeSignature": "4/4",
+  "pagesCount": 1,
+  "channels": [
+    { "id": "kick",  "steps": [true, false, false, true, false, false, true, false, false, false, true, false, false, true, false, false], "volume": 1 },
+    { "id": "snare", "steps": [false, false, false, false, true, false, false, true, false, false, false, false, true, false, false, false], "volume": 0.9 },
+    { "id": "hihat", "steps": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, true], "volume": 0.5 },
+    { "id": "crash", "steps": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "volume": 0.5 },
+    { "id": "ride",  "steps": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "volume": 0.7 },
+    { "id": "tom1",  "steps": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "volume": 0.8 },
+    { "id": "tom2",  "steps": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false], "volume": 0.8 },
+    { "id": "tom3",  "steps": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true], "volume": 0.7 }
+  ]
+}

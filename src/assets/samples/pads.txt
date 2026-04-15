@@ -1,0 +1,9 @@
+
+kick.mp3
+snare.mp3
+hihat.mp3
+crash.mp3
+ride.mp3
+tom1.mp3
+tom2.mp3
+tom3.mp3

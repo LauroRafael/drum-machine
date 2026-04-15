@@ -1,0 +1,17 @@
+{
+  "name": "Reggae",
+  "bpm": 80,
+  "swing": 15,
+  "timeSignature": "4/4",
+  "pagesCount": 1,
+  "channels": [
+    { "id": "kick",  "steps": [false, false, false, false, false, false, true, false, false, false, false, false, false, false, true, false], "volume": 1 },
+    { "id": "snare", "steps": [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false], "volume": 0.8 },
+    { "id": "hihat", "steps": [false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, false], "volume": 0.5 },
+    { "id": "crash", "steps": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "volume": 0.5 },
+    { "id": "ride",  "steps": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false], "volume": 0.6 },
+    { "id": "tom1",  "steps": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "volume": 0.8 },
+    { "id": "tom2",  "steps": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "volume": 0.8 },
+    { "id": "tom3",  "steps": [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false], "volume": 0.7 }
+  ]
+}

@@ -1,0 +1,85 @@
+<div class="flex justify-between items-center bg-dm-panel rounded-lg p-3 shadow-md border border-dm-bg">
+  
+  <!-- Left Side: Tabs & Utils -->
+  <div class="flex bg-dm-bg rounded border border-dm-trim overflow-hidden h-7 items-center">
+    <button class="px-4 py-1 text-sm font-bold bg-gray-300 text-gray-800 border-r border-dm-trim h-full focus:outline-none">Compose</button>
+    <button (click)="sequencer.clearAll()" class="px-4 py-1 text-sm text-gray-400 hover:text-white border-r border-dm-trim transition-colors h-full focus:outline-none" title="Clear all pads">Clear</button>
+    
+    <!-- Export / Import moved here -->
+    <button (click)="exportJson()" class="px-3 py-1 text-gray-400 hover:text-white border-r border-dm-trim h-full flex items-center justify-center focus:outline-none" title="Download Pattern (JSON)">
+      <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    </button>
+    <input type="file" #fileInput accept=".json" class="hidden" (change)="importJson($event)" />
+    <button (click)="fileInput.click()" class="px-3 py-1 text-gray-400 hover:text-white h-full flex items-center justify-center focus:outline-none" title="Upload Pattern (JSON)">
+      <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5 4v2h14V4H5zm0 10h4v6h6v-6h4l-7-7-7 7z"/></svg>
+    </button>
+  </div>
+
+  <!-- Center: Title -->
+  <div class="flex items-center gap-2">
+    <!-- Play / Stop -->
+    <div class="flex bg-dm-bg rounded border border-dm-trim overflow-hidden">
+      <!-- Play Button -->
+      <!-- If playing, it's highlighted, clicking stops it -->
+      <button 
+        (click)="sequencer.togglePlay()"
+        class="px-4 py-1 flex items-center justify-center border-r border-dm-trim transition-colors focus:outline-none"
+        [class.bg-dm-pad-active]="sequencer.isPlaying()"
+        [class.text-white]="sequencer.isPlaying()"
+        [class.text-gray-400]="!sequencer.isPlaying()"
+        [class.hover:text-white]="!sequencer.isPlaying()"
+        title="Play / Pause">
+        @if(sequencer.isPlaying()) {
+          <!-- Stop Square icon -->
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+        } @else {
+          <!-- Play Triangle icon -->
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        }
+      </button>
+
+      <!-- Reset / Back to start -->
+      <button 
+        (click)="sequencer.reset()"
+        class="px-3 py-1 flex items-center justify-center text-gray-400 hover:text-white transition-colors focus:outline-none"
+        title="Reset">
+        <!-- Rewind icon -->
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Right Side: BPM and other tweaks -->
+  <div class="flex items-center gap-2">
+    <!-- BPM display + slider -->
+    <div class="flex items-center bg-transparent border border-dm-trim rounded px-2 py-1 text-sm font-mono text-gray-300">
+      <span class="w-8 text-right mr-2">{{ sequencer.bpm() }}</span>
+      <span class="text-xs text-gray-500 mr-2">BPM</span>
+      <input type="range" 
+             class="w-24 h-1 bg-dm-panel rounded-lg appearance-none cursor-pointer"
+             min="60" max="180" step="1"
+             [value]="sequencer.bpm()"
+             (input)="changeBpm($event)" />
+    </div>
+
+    <!-- Swing Slider -->
+    <div class="flex items-center bg-transparent border border-dm-trim rounded px-2 py-1 text-sm font-mono text-gray-300 ml-2">
+      <span class="text-xs text-gray-500 mr-2">SWING</span>
+      <input type="range" 
+             class="w-16 h-1 bg-dm-panel rounded-lg appearance-none cursor-pointer"
+             min="0" max="100" step="5"
+             [value]="sequencer.swing()"
+             (input)="changeSwing($event)" />
+      <span class="w-8 flex justify-end text-xs ml-1">{{ sequencer.swing() }}%</span>
+    </div>
+
+    <!-- Master Volume -->
+    <div class="flex items-center bg-transparent border border-dm-trim rounded px-2 py-1 text-sm font-mono text-gray-300 ml-2">
+      <span class="text-xs text-gray-500 mr-2">VOL</span>
+      <input type="range" 
+             class="w-16 h-1 bg-dm-panel rounded-lg appearance-none cursor-pointer"
+             #masterVol value="0.8" min="0" max="1" step="0.05"
+             (input)="audioService.setMasterVolume(+masterVol.value)" />
+    </div>
+  </div>
+</div>

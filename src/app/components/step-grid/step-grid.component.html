@@ -1,0 +1,70 @@
+<div class="bg-dm-panel rounded-lg p-6 shadow-xl border border-dm-bg">
+  
+  <!-- Header row for beats -->
+  <div class="flex mb-2">
+    <!-- Offset for instrument names -->
+    <div class="w-[50px] shrink-0 mr-2"></div>
+    <!-- Offset for channel controls -->
+    <div class="w-[60px] shrink-0 mr-1"></div>
+    <!-- Steps Header -->
+    <div class="flex flex-1 justify-between px-[1px]">
+      @for(step of [].constructor(sequencer.stepsPerPage()); track $index) {
+        <div class="flex-1 flex justify-center items-center text-[10px] text-gray-500 font-mono tracking-tighter"
+             [class.text-white]="($index % (sequencer.timeSignature() === '12/8' ? 3 : 4)) === 0">
+          {{ ($index % (sequencer.timeSignature() === '12/8' ? 3 : 4) === 0) ? ($index / (sequencer.timeSignature() === '12/8' ? 3 : 4)) + 1 + (sequencer.viewPage() * (sequencer.timeSignature() === '12/8' ? 4 : 4)) : '+' }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Rows per channel -->
+  <div class="flex flex-col gap-[1px] bg-black p-[2px] rounded border border-gray-800 shadow-xl overflow-hidden mt-1">
+    @for(channel of sequencer.channels(); track channel.id) {
+      <div class="flex items-center bg-gray-900 border-b border-gray-800 last:border-b-0">
+        <!-- Instrument Label -->
+        <div class="w-[50px] shrink-0 text-gray-400 font-mono tracking-widest text-[9px] font-bold uppercase ml-2 select-none"
+             [class.opacity-50]="channel.name === '-'">
+          {{ channel.name }}
+        </div>
+
+        <!-- Channel Strip Controls -->
+        <div class="w-[60px] shrink-0 mr-1 flex items-center justify-center">
+          <input type="range" 
+                 class="w-[45px] h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer hover:bg-gray-500"
+                 min="0" max="2" step="0.05"
+                 [disabled]="channel.name === '-'"
+                 [value]="channel.volume"
+                 (input)="sequencer.setChannelVolume(channel.id, +$any($event.target).value)" />
+        </div>
+
+        <!-- The Pad Grid (Sliced for the active viewPage) -->
+        <div class="flex flex-1 justify-between bg-black px-[1px] py-[1px] gap-[1px] items-stretch min-h-[22px]">
+          @for(step of [].constructor(sequencer.stepsPerPage()); track $index) {
+            <button 
+              type="button"
+              [disabled]="channel.name === '-'"
+              (click)="sequencer.toggleStep(channel.id, $index + (sequencer.viewPage() * sequencer.stepsPerPage()))"
+              class="flex-1 rounded-[1px] transition-colors relative flex flex-col items-center justify-center shadow-sm min-h-[22px] min-w-[15px]"
+              [class.active:brightness-90]="channel.name !== '-'"
+              [class.opacity-30]="channel.name === '-'"
+              [class.cursor-not-allowed]="channel.name === '-'"
+              
+              [class.bg-dm-pad-on]="channel.steps[$index + (sequencer.viewPage() * sequencer.stepsPerPage())] && sequencer.currentStep() !== ($index + (sequencer.viewPage() * sequencer.stepsPerPage()))"
+              [class.bg-dm-pad-active]="channel.steps[$index + (sequencer.viewPage() * sequencer.stepsPerPage())] && sequencer.currentStep() === ($index + (sequencer.viewPage() * sequencer.stepsPerPage()))"
+              
+              [class.bg-gray-300]="!channel.steps[$index + (sequencer.viewPage() * sequencer.stepsPerPage())] && sequencer.currentStep() === ($index + (sequencer.viewPage() * sequencer.stepsPerPage()))"
+              
+              [class.bg-gray-700]="!channel.steps[$index + (sequencer.viewPage() * sequencer.stepsPerPage())] && sequencer.currentStep() !== ($index + (sequencer.viewPage() * sequencer.stepsPerPage())) && ($index % (sequencer.timeSignature() === '12/8' ? 3 : 4)) !== 0"
+              
+              [class.bg-gray-600]="!channel.steps[$index + (sequencer.viewPage() * sequencer.stepsPerPage())] && sequencer.currentStep() !== ($index + (sequencer.viewPage() * sequencer.stepsPerPage())) && ($index % (sequencer.timeSignature() === '12/8' ? 3 : 4)) === 0"
+            >
+              <div class="w-1/2 max-w-[10px] h-[3px] rounded-full shadow-inner opacity-90 transition-colors"
+                   [class.bg-red-600]="channel.steps[$index + (sequencer.viewPage() * sequencer.stepsPerPage())]"
+                   [class.bg-black]="!channel.steps[$index + (sequencer.viewPage() * sequencer.stepsPerPage())]"></div>
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
