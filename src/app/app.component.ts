@@ -62,6 +62,7 @@ export class AppComponent {
     });
 
     this.isReady = true;
+    this.toastr.success('Sistema de Áudio Pronto!', 'Drum Machine');
   }
 
   async changeDrumKit(event: Event) {
