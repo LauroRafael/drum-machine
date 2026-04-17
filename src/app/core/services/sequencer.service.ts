@@ -232,11 +232,12 @@ export class SequencerService {
     const ts = this.timeSignature();
     const metroModulo = ts === '12/8' ? 3 : 4;
     if (this.metronomeEnabled() && beatNumber % metroModulo === 0) {
+      const isFirstBeat = beatNumber % this.stepsPerPage() === 0;
       if (this.audioService.hasBuffer('metro')) {
-        this.audioService.playSound('metro', time, 1);
+        this.audioService.playSound('metro', time, 1, isFirstBeat ? 1.5 : 1.0);
       } else {
         // Fallback to synthesized beep if metro.wav is broken/missing
-        this.audioService.playBeep(time, (beatNumber % this.stepsPerPage() === 0) ? 880 : 440);
+        this.audioService.playBeep(time, isFirstBeat ? 880 : 440);
       }
     }
   }

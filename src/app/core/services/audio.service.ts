@@ -226,7 +226,7 @@ export class AudioService {
     return false;
   }
 
-  playSound(sampleId: string, time?: number, volume: number = 1): void {
+  playSound(sampleId: string, time?: number, volume: number = 1, playbackRate: number = 1): void {
     if (!this.audioContext || !this.masterGain) return;
 
     const buffer = this.buffers.get(sampleId);
@@ -234,6 +234,7 @@ export class AudioService {
 
     const source = this.audioContext.createBufferSource();
     source.buffer = buffer;
+    source.playbackRate.value = playbackRate;
 
     const gainNode = this.audioContext.createGain();
     gainNode.gain.value = volume;
